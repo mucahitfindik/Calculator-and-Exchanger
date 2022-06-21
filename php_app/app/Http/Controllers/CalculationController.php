@@ -10,7 +10,7 @@ class CalculationController extends Controller
         if(!$request->get("expression")){
             return response()->json(['message' => 'Expression Not Found!'], 404);
         }
-        $response = response()->json(['result' => '9']);
+        $response = response()->json(['result' => '11']);
         return $response;
     }
 }

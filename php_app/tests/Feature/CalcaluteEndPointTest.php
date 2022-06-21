@@ -29,6 +29,6 @@ class CalcaluteEndPointTest extends TestCase
     public function test_checkResult(){
         $response = $this->json('GET', "/calculate",['expression' => "2+4+5"]);
         $response->assertStatus(200);
-        $this->assertEquals(json_decode($response->getContent())->result, "9");
+        $this->assertEquals(json_decode($response->getContent())->result, "11");
     }
 }
