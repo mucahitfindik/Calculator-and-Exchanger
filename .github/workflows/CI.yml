@@ -53,6 +53,8 @@ jobs:
     - name: Running tests
       run: |
         python python_app/tests.py
+    - name: Check the container
+      run: curl -vvv -L 0.0.0.0:8002
     - name: Set up PhP 8
       uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
