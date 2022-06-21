@@ -75,7 +75,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: mucahitfindik/exchange_backend
-        context: ./python_app
+        directory: ./python_app
         tags: v1
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -84,7 +84,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: mucahitfindik/calculate_backend
-        context: ./php_app
+        directory: ./php_app
         tags: v1
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
