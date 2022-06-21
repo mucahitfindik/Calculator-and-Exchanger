@@ -22,7 +22,7 @@ jobs:
         docker system prune -f
         docker pull mucahitfindik/calculate_backend:v1
     - name: Build a container from the image
-      run: docker run -p 8002:8000 -dit mucahitfindik/calculate_backend:v1
+      run: docker run -p 8002:8000 -dit --memory="1g" --memory-swap="2g" --cpus="1.5" mucahitfindik/calculate_backend:v1
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
       with:
@@ -81,7 +81,7 @@ jobs:
       run: vendor/bin/phpunit
       working-directory: ./php_app
     - name: Check the container
-      run: curl -vvv -L localhost:8002
+      run: curl -vvv -L 0.0.0.0:8002
     - name: Use Node.js
       uses: actions/setup-node@v2
       with: 
