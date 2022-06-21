@@ -8,7 +8,7 @@ describe('Calculation EndPoint Check', () => {
         const body = {
             expression: "2+3+4"
           }
-        const res = await request("0.0.0.0:8000").get("/calculate").send(body)
+        const res = await request("0.0.0.0:8002").get("/calculate").send(body)
         expect(res.statusCode).toEqual(200)
         expect(res.body.result).toEqual("9")
     })
