@@ -78,6 +78,10 @@ jobs:
       run: docker pull mucahitfindik/calculate_backend:v1
     - name: Build a container from the image
       run: docker run -p 8000:8000 -dit mucahitfindik/calculate_backend:v1
+    - name: Check the container
+      run: |
+        docker system prune -f
+        curl -vvv 0.0.0.0:8000
     - name: Use Node.js
       uses: actions/setup-node@v2
       with: 
