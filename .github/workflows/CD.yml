@@ -72,18 +72,18 @@ jobs:
       run: vendor/bin/phpunit
       working-directory: ./php_app
     - name: Build and Push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
-        with:
-          image: mucahitfindik/exchange_backend
-          tags: v1
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: mucahitfindik/exchange_backend
+        tags: v1
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and Push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
-        with:
-          image: mucahitfindik/calculate_backend
-          tags: v1
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: mucahitfindik/calculate_backend
+        tags: v1
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
