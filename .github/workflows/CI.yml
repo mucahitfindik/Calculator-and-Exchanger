@@ -81,7 +81,7 @@ jobs:
       run: vendor/bin/phpunit
       working-directory: ./php_app
     - name: Check the container
-      run: curl -vvv -L 0.0.0.0:8002
+      run: curl -vvv -L localhost:8002
     - name: Use Node.js
       uses: actions/setup-node@v2
       with: 
