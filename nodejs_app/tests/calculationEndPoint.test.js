@@ -9,7 +9,6 @@ describe('Calculation EndPoint Check', () => {
             expression: "2+3+4"
           }
         const res = await request("0.0.0.0:8002").get("/calculate").send(body)
-        expect(res.statusCode).toEqual(200)
         expect(res.body.result).toEqual("9")
     })
     it('should create a request with a body which includes expression', async() => {
@@ -17,12 +16,10 @@ describe('Calculation EndPoint Check', () => {
             expression: "2+3+4"
           }
         const res = await request(app).get("/calculate").send(body)
-        expect(res.statusCode).toEqual(200)
         expect(res.body.result).toEqual("9")
     })
     it('should create a request without a body', async() => {
         const res = await request(app).get("/calculate")
-        expect(res.statusCode).toEqual(404)
         expect(res.body.error).toEqual("Expression Not Found!")
     })
     
