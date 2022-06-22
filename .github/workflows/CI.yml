@@ -14,6 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }}
+        -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Pull Docker Image (python)
+      run: docker pull mucahitfindik/exchange_backend:v1
+    - name: Build a container from the exchange backend image
+      run: docker run -p 5002:5000 -dit --memory="1g" --memory-swap="2g" --cpus="1.5" mucahitfindik/exchange_backend:v1
+    - name: Pull Docker Image (php)
+      run: docker pull mucahitfindik/calculate_backend:v1
+    - name: Build a container from the exchange backend image
+      run: docker run -p 8002:8000 -dit --memory="1g" --memory-swap="2g" --cpus="1.5" mucahitfindik/calculate_backend:v1
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
       with:
@@ -71,3 +82,13 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
       working-directory: ./php_app
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: "14.x"
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./nodejs_app
+    - name: Run test
+      run: npm test
+      working-directory: ./nodejs_app
