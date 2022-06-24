@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.Riksbank.riksbank import Riksbank
+from app.riksbank.riksbank import Riksbank
 
 
 blueprint = Blueprint('exchange', __name__)
@@ -25,6 +25,7 @@ def get_articles():
     elif not data["fromCurrency"] in Riksbank.get_currency_list():
         return {'result': "Currency list doesn't include" + data["fromCurrency"]}
     amount = data["amount"]
-    toCurrency = data["toCurrency"]
-    fromCurrency = data["fromCurrency"]
-    return {'result': "Hello World!"}
+    to_currency = data["toCurrency"]
+    from_currency = data["fromCurrency"]
+
+    return Riksbank.exchange_currency(amount, to_currency, from_currency)
