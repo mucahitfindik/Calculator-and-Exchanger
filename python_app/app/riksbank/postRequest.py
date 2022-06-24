@@ -11,8 +11,10 @@ def all_cross_names():
     return parse_all_cross_names_response(response.content)
 
 
-def get_cross_rate(to_currency, from_currency):
-    body, headers = ConfigureSoap.soap_cross_rates(to_currency, from_currency)
+def get_cross_rate(to_currency, from_currency, date):
+    body, headers = ConfigureSoap.soap_cross_rates(to_currency, from_currency, date)
     response = requests.post(url, data=body, headers=headers)
-    return parse_get_cross_rate(response.content, to_currency, from_currency)
-
+    cross_rate = parse_get_cross_rate(response.content, to_currency, from_currency)
+    if cross_rate == -1:
+        return get_cross_rate(to_currency, from_currency, date.replace(day=(date.day - 1)))
+    return cross_rate
