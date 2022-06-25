@@ -1,6 +1,7 @@
 .DS_store
 
 nodejs_app/node_modules/
+**.coverage
 
 python_app/.DS_Store
 python_app/.env
