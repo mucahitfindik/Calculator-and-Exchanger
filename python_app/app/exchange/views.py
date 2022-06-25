@@ -1,10 +1,18 @@
 from flask import Blueprint, request
+from app.riksbank.riksbank import Riksbank
+import datetime as dt
 
 blueprint = Blueprint('exchange', __name__)
 
 
+@blueprint.route('/currency-list', methods=('GET',))
+def get_currency_list():
+    return Riksbank.get_currency_list()
+
+
 @blueprint.route('/exchange', methods=('GET',))
-def get_articles():
+def get_exchanged_result():
+
     data = request.get_json()
     if "amount" not in data or data["amount"] == "":
         return {'result': "No amount provided!"}
@@ -12,8 +20,13 @@ def get_articles():
         return {'result': "No toCurrency provided!"}
     elif "fromCurrency" not in data or data["fromCurrency"] == "":
         return {'result': "No fromCurrency provided!"}
-
+    elif not data["toCurrency"] in Riksbank.get_currency_list():
+        return {'result': "Currency list doesn't include" + data["toCurrency"]}
+    elif not data["fromCurrency"] in Riksbank.get_currency_list():
+        return {'result': "Currency list doesn't include" + data["fromCurrency"]}
     amount = data["amount"]
-    toCurrency = data["toCurrency"]
-    fromCurrency = data["fromCurrency"]
-    return {'result': "Hello World!"}
+    to_currency = data["toCurrency"]
+    from_currency = data["fromCurrency"]
+    date = dt.date.fromisoformat(data["date"])
+
+    return {'result': amount*Riksbank.exchange_currency(to_currency, from_currency, date)}
