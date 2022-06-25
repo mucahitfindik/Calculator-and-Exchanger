@@ -1,5 +1,28 @@
 .DS_store
 
-**/node_modules
+nodejs_app/node_modules/
 
-**/venv
+python_app/.DS_Store
+python_app/.env
+python_app/.flaskenv
+python_app/*.pyc
+python_app/*.pyo
+python_app/env/
+python_app/venv/
+python_app/.venv/
+python_app/env*
+python_app/dist/
+python_app/build/
+python_app/*.egg
+python_app/*.egg-info/
+python_app/.tox/
+python_app/.cache/
+python_app/.pytest_cache/
+python_app/.idea/
+python_app/docs/_build/
+
+# Coverage reports
+python_app/htmlcov/
+python_app/.coverage
+python_app/.coverage.*
+python_app/*,cover
