@@ -1,7 +1,12 @@
-.DS_store
-
+**/.DS_store
+**/.gitignore.swp
+**/.gitignore.swo
+**/.pytest_cache/
+**/.idea/
 nodejs_app/node_modules/
+nodejs_app/.env
 **.coverage
+
 
 python_app/.DS_Store
 python_app/.env
