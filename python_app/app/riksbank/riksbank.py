@@ -12,6 +12,6 @@ class Riksbank:
         return Riksbank.__currency_dict
 
     @classmethod
-    def exchange_currency(cls, amount, to_currency, from_currency):
-        cross_rate = get_cross_rate(to_currency, from_currency, dt.datetime.now().date())
-        return {'result': amount*cross_rate}
+    def exchange_currency(cls, to_currency, from_currency, date):
+        cross_rate = get_cross_rate(to_currency, from_currency, date)
+        return cross_rate
