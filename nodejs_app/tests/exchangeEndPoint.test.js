@@ -7,21 +7,23 @@ describe('Exchange EndPoint Check', () => {
         const body = {
             "amount" : 120, 
             "toCurrency" : "TRY", 
-            "fromCurrency": "USD"
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
         }
         const res = await request("0.0.0.0:5002").get("/exchange").send(body)
         expect(res.statusCode).toEqual(200)
-        expect(res.body.result).toEqual("Hello World!")
+        expect(res.body.result).toEqual(6.9)
     })
     it('should create a request with a body which includes expression', async() => {
         const body = {
             "amount" : 120, 
             "toCurrency" : "TRY", 
-            "fromCurrency": "USD"
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
         }
         const res = await request(app).get("/exchange").send(body)
         expect(res.statusCode).toEqual(200)
-        expect(res.body.result).toEqual("Hello World!")
+        expect(res.body.result).toEqual(6.9)
     })
     it('should create a request without a body', async() => {
         const res = await request(app).get("/exchange")
