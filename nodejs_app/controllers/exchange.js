@@ -11,7 +11,7 @@ const exchange = async (req, res, next) => {
         amount : req.body.amount,
         toCurrency : req.body.toCurrency,
         fromCurrency : req.body.fromCurrency,
-
+        date : req.body.date,
     });
     const options = pythonServerConfig.pythonServerConfig(path = req.path, method = req.method);
     options.headers = {
