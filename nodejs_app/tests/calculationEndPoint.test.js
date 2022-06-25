@@ -6,7 +6,7 @@ const sendHttp = require("../controllers/httpServer")
 describe('Calculation EndPoint Check', () => {
     it('php_app calculate end point check', async() => {
         const body = {
-            expression: "2+3+4"
+            expression: "(2/4*(6-3))"
           }
         const res = await request("0.0.0.0:8002").get("/calculate").send(body)
         expect(res.statusCode).toEqual(200)
