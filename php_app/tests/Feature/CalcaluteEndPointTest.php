@@ -15,9 +15,10 @@ class CalcaluteEndPointTest extends TestCase
      */
     public function test_endpoint_check()
     {
-        $response = $this->json('GET', "/calculate", ['expression' => "2+4+5"]);
+        $response = $this->json('GET', "/calculate", ['expression' => "(2/4*(6-3))"]);
 
         $response->assertStatus(200);
+        $this->assertEquals(json_decode($response->getContent())->result, 1.5);
     }
     public function test_hasExpressionAttribute()
     {
@@ -29,6 +30,6 @@ class CalcaluteEndPointTest extends TestCase
     public function test_checkResult(){
         $response = $this->json('GET', "/calculate",['expression' => "2+4+5"]);
         $response->assertStatus(200);
-        $this->assertEquals(json_decode($response->getContent())->result, "9");
+        $this->assertEquals(json_decode($response->getContent())->result, 11);
     }
 }
