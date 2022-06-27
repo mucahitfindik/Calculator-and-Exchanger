@@ -20,7 +20,7 @@ const calculation = async (req, res, next) => {
         'Content-Length': data.length
         };
     httpServer.sendHttpRequest(res, options, data, function(body,data){
-        formula.add_formula_history(JSON.parse(data).expression, body.result);
+        formula.add_formula_history(JSON.parse(data), body.result);
         return res.json(body);
     });
    
