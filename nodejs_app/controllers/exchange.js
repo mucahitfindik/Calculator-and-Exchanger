@@ -21,7 +21,7 @@ const exchange = async (req, res, next) => {
         };
     
     httpServer.sendHttpRequest(res, options, data, function(body,data){
-        exchangeStorage.add_exchange_history(JSON.parse(data), body.result);
+        exchangeStorage.add_exchange_history(JSON.parse(data), body);
         return res.json(body);
     });
    /* const statusCode = statusCodeMessage[0];
