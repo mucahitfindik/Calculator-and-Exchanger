@@ -1,5 +1,7 @@
 const phpServerConfig = require('../controllers/phpServerConfig')
 const httpServer = require('../controllers/httpServer')
+const formula = require("../history/formula")
+
 const calculation = async (req, res, next) => {
     
     
@@ -9,7 +11,7 @@ const calculation = async (req, res, next) => {
         return res.json({"error":"Expression Not Found!"});
         //res.status(404).json({Error:"error"});
     }
-    const data = JSON.stringify({
+    var data = JSON.stringify({
         expression : req.body.expression
     });
     const options = phpServerConfig.phpServerConfig(path = req.path, method = req.method);
@@ -17,8 +19,13 @@ const calculation = async (req, res, next) => {
         'Content-Type': 'application/json',
         'Content-Length': data.length
         };
+    httpServer.sendHttpRequest(res, options, data, function(body,data){
+        formula.add_formula_history(JSON.parse(data).expression, body.result);
+        return res.json(body);
+    });
+   
+
     
-    return httpServer.sendHttpRequest(res, options, data);
    /* const statusCode = statusCodeMessage[0];
     const response = statusCodeMessage[1];*/
     
