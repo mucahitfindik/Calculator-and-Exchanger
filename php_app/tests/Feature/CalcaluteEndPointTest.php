@@ -18,18 +18,27 @@ class CalcaluteEndPointTest extends TestCase
         $response = $this->json('GET', "/calculate", ['expression' => "(2/4*(6-3))"]);
 
         $response->assertStatus(200);
-        $this->assertEquals(json_decode($response->getContent())->result, 1.5);
     }
-    public function test_hasExpressionAttribute()
+    public function test_has_expression_attribute()
     {
         $response = $this->json('GET', "/calculate");
 
-        $response->assertStatus(404);
         $this->assertEquals(json_decode($response->getContent())->message, "Expression Not Found!");
+    }
+    public function test_invalid_expression()
+    {
+        $response = $this->json('GET', "/calculate", ['expression' => "(2/4*(6-3)das)"]);
+
+        $this->assertEquals(json_decode($response->getContent())->message, "Expression includes unavailable character(s)!");
+    }
+    public function test_parenthesis_error()
+    {
+        $response = $this->json('GET', "/calculate", ['expression' => "(2/4*(6-3)"]);
+
+        $this->assertEquals(json_decode($response->getContent())->message, "Parenthesis error!");
     }
     public function test_checkResult(){
         $response = $this->json('GET', "/calculate",['expression' => "2+4+5"]);
-        $response->assertStatus(200);
         $this->assertEquals(json_decode($response->getContent())->result, 11);
     }
 }

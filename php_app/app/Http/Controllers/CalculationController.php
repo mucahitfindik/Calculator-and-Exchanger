@@ -15,7 +15,7 @@ class CalculationController extends Controller
         }
         $exp = $request->get("expression");
         if (!preg_match("#^[0-9 \.\+\-\*\/\(\)]+$#", $exp)) {
-            return response()->json(['message' => 'Expression includes unavailable character(s)'], 404); 
+            return response()->json(['message' => 'Expression includes unavailable character(s)!'], 404); 
         }
         if (substr_count($exp, '(') != substr_count($exp, ')')) {
             return response()->json(['message' => 'Parenthesis error!'], 404); 
