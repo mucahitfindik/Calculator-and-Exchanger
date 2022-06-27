@@ -1,5 +1,6 @@
 const pythonServerConfig = require('../controllers/pythonServerConfig')
 const httpServer = require('../controllers/httpServer')
+const exchangeStorage = require("../history/exchange-storage")
 const exchange = async (req, res, next) => {
     
     if (!req.body.amount || !req.body.toCurrency || !req.body.fromCurrency ){
@@ -19,7 +20,10 @@ const exchange = async (req, res, next) => {
         'Content-Length': data.length
         };
     
-    return httpServer.sendHttpRequest(res, options, data);
+    httpServer.sendHttpRequest(res, options, data, function(body,data){
+        exchangeStorage.add_exchange_history(JSON.parse(data), body.result);
+        return res.json(body);
+    });
    /* const statusCode = statusCodeMessage[0];
     const response = statusCodeMessage[1];*/
     

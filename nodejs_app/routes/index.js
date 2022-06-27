@@ -7,4 +7,5 @@ var router = express.Router();
 router.get('/calculate', calculationController.calculation);
 router.get('/exchange', exchangeController.exchange);
 router.get('/history/formula', historyController.history_formula);
+router.get('/history/exchange', historyController.history_exchange);
 module.exports = router;
