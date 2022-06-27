@@ -1,7 +1,5 @@
 const request = require('supertest')
 const app = require('../app')
-const pythonServerConfig = require("../controllers/pythonServerConfig")
-const sendHttp = require("../controllers/httpServer")
 describe('Exchange EndPoint Check', () => {
     it('php_app calculate end point check', async() => {
         const body = {

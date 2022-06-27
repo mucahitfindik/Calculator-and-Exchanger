@@ -1,7 +1,5 @@
 const request = require('supertest')
 const app = require('../app')
-const phpServerConfig = require("../controllers/phpServerConfig")
-const sendHttp = require("../controllers/httpServer")
 
 describe('Calculation EndPoint Check', () => {
     it('php_app calculate end point check', async() => {
