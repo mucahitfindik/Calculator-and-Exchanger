@@ -1,5 +1,5 @@
 const http = require('http');
-const sendHttpRequest = (res, options, data) =>{
+const sendHttpRequest = (res, options, data, cb) =>{
 
     let body = [];
 
@@ -9,8 +9,8 @@ const sendHttpRequest = (res, options, data) =>{
         }).on('end', () => {
         body = Buffer.concat(body).toString();
         body = JSON.parse(body);
-        return res.status(200).json(body);
-        }); 
+        cb(body,data);
+        });
     });
     req.write(data);
     req.on('error', e=> {

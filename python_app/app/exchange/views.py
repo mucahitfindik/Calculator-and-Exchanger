@@ -28,5 +28,5 @@ def get_exchanged_result():
     to_currency = data["toCurrency"]
     from_currency = data["fromCurrency"]
     date = dt.date.fromisoformat(data["date"])
-
-    return {'result': amount*Riksbank.exchange_currency(to_currency, from_currency, date)}
+    cross_rate = Riksbank.exchange_currency(to_currency, from_currency, date)
+    return {'result': amount*cross_rate, 'cross_rate': cross_rate}
