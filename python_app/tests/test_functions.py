@@ -374,4 +374,4 @@ Observations are published daily at 12.15 p.m.</informationtext>
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>"""
     cross_rate = parse_get_cross_rate(content, to_currency, from_currency)
-    assert cross_rate == 0.0575
+    assert cross_rate == 17.3866

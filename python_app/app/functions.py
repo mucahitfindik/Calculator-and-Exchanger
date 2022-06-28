@@ -17,5 +17,5 @@ def parse_get_cross_rate(content, to_currency, from_currency):
         return -1
     content_d = content_d["groups"]["series"]
     for item in content_d:
-        if item["seriesname"]["#text"] == '1 '+to_currency+' = ? '+from_currency:
+        if item["seriesname"]["#text"] == '1 '+from_currency+' = ? '+to_currency:
             return float(item["resultrows"]["value"]['#text'])
