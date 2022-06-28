@@ -20,13 +20,18 @@ def get_exchanged_result():
         return {'result': "No toCurrency provided!"}
     elif "fromCurrency" not in data or data["fromCurrency"] == "":
         return {'result': "No fromCurrency provided!"}
-    elif not data["toCurrency"] in Riksbank.get_currency_list():
-        return {'result': "Currency list doesn't include" + data["toCurrency"]}
-    elif not data["fromCurrency"] in Riksbank.get_currency_list():
-        return {'result': "Currency list doesn't include" + data["fromCurrency"]}
+
     amount = data["amount"]
     to_currency = data["toCurrency"]
     from_currency = data["fromCurrency"]
     date = dt.date.fromisoformat(data["date"])
-    cross_rate = Riksbank.exchange_currency(to_currency, from_currency, date)
-    return {'result': amount*cross_rate, 'cross_rate': cross_rate}
+    if not isinstance(to_currency, list):
+        to_currency = [to_currency]
+    if from_currency not in Riksbank.get_currency_list():
+        return {'result': "Currency list doesn't include " + from_currency}
+
+    for currency in to_currency:
+        if currency not in Riksbank.get_currency_list():
+            return {'result': "Currency list doesn't include " + currency}
+
+    return Riksbank.exchange_currency(amount, to_currency, from_currency, date)
