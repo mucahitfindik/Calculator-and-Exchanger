@@ -7,7 +7,7 @@ blueprint = Blueprint('exchange', __name__)
 
 @blueprint.route('/currency-list', methods=('GET',))
 def get_currency_list():
-    return Riksbank.get_currency_list()
+    return {'currency_list': Riksbank.get_currency_list()}
 
 
 @blueprint.route('/exchange', methods=('GET',))

@@ -53,7 +53,7 @@ def test_get_currency_list(app, client):
         "TRY": "Turkish new lira",
         "USD": "US dollar",
         "ZAR": "South African rand"}
-    assert response.get_json() == actual_cross_names
+    assert response.get_json()["currency_list"] == actual_cross_names
     assert response.status_code == 200
 
 
