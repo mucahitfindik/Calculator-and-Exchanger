@@ -62,7 +62,7 @@ def test_get_cross_rate_for_holidays():
     from_currency = "USD"
     date = dt.datetime(year=2022, month=6, day=24).date()
     cross_rate = get_cross_rate(to_currency, from_currency, date)
-    assert cross_rate == 0.0575
+    assert cross_rate == 17.3866
 
 
 def test_get_cross_rate_for_weekdays():
@@ -70,4 +70,4 @@ def test_get_cross_rate_for_weekdays():
     from_currency = "USD"
     date = dt.datetime(year=2022, month=6, day=23).date()
     cross_rate = get_cross_rate(to_currency, from_currency, date)
-    assert cross_rate == 0.0575
+    assert cross_rate == 17.3866

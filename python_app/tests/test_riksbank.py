@@ -64,8 +64,8 @@ def test_exchange_currency():
     date = dt.datetime(year=2022, month=6, day=24).date()
     res = Riksbank.exchange_currency(amount, to_currency, from_currency, date).get_json()
     assert res == [{
-        "cross_rate": 2.458,
-        "result": 294.96000000000004,
+        "cross_rate": 0.4068,
+        "result": 48.816,
         "to_currency": "DKK"
     }]
 
@@ -77,11 +77,11 @@ def test_exchange_currency_with_multi_to_currency():
     date = dt.datetime(year=2022, month=6, day=24).date()
     res = Riksbank.exchange_currency(amount, to_currency, from_currency, date).get_json()
     assert res == [{
-        "cross_rate": 2.458,
-        "result": 294.96000000000004,
+        "cross_rate": 0.4068,
+        "result": 48.816,
         "to_currency": "DKK"
     }, {
-        "cross_rate": 17.3866,
-        "result": 2086.3920000000003,
+        "cross_rate": 0.0575,
+        "result": 6.9,
         "to_currency": "USD"
     }]
