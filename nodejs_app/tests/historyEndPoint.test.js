@@ -12,8 +12,8 @@ describe('History EndPoint Check', () => {
         const res_calculate = await request(app).get("/calculate").send(body)
         const formula_history = await (await request(app).get("/history/formula")).body.formula_history
         expect(formula_history[0]).toEqual({
-            calculation_request:body,
-            result:res_calculate.body
+            expression:body.expression,
+            result:res_calculate.body.result
         })
     })
     it('history/exchange end point check', async() => {
