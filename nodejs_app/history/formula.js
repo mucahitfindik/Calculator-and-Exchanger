@@ -1,8 +1,8 @@
 const formula_history_list= [];
-const add_formula_history = (request_data, result)=>{
+const add_formula_history = (expression, result)=>{
     record = {
-        calculation_request:request_data,
-        result:result
+        expression,
+        result
     }
     formula_history_list.push(record);
 }
