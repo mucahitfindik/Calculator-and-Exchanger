@@ -58,8 +58,30 @@ def test_get_currency_list():
 
 
 def test_exchange_currency():
-    to_currency = "TRY"
-    from_currency = "USD"
+    to_currency = ["DKK"]
+    from_currency = "TRY"
+    amount = 120
     date = dt.datetime(year=2022, month=6, day=24).date()
-    cross_rate = Riksbank.exchange_currency(to_currency, from_currency, date)
-    assert cross_rate == 0.0575
+    res = Riksbank.exchange_currency(amount, to_currency, from_currency, date).get_json()
+    assert res == [{
+        "cross_rate": 2.458,
+        "result": 294.96000000000004,
+        "to_currency": "DKK"
+    }]
+
+
+def test_exchange_currency_with_multi_to_currency():
+    to_currency = ["DKK", "USD"]
+    from_currency = "TRY"
+    amount = 120
+    date = dt.datetime(year=2022, month=6, day=24).date()
+    res = Riksbank.exchange_currency(amount, to_currency, from_currency, date).get_json()
+    assert res == [{
+        "cross_rate": 2.458,
+        "result": 294.96000000000004,
+        "to_currency": "DKK"
+    }, {
+        "cross_rate": 17.3866,
+        "result": 2086.3920000000003,
+        "to_currency": "USD"
+    }]

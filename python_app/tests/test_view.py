@@ -58,6 +58,24 @@ def test_get_currency_list(app, client):
 
 
 def test_get_exchanged_result(app, client):
-    body = {'amount': 120, 'toCurrency': "TRY", 'fromCurrency': "USD", "date": "2022-06-23"}
-    response = client.get('/exchange', json=body)
-    assert response.get_json()['result'] == body['amount']*0.0575
+    body = {'amount': 120, 'toCurrency': "USD", 'fromCurrency': "TRY", "date": "2022-06-23"}
+    response = client.get('/exchange', json=body).get_json()
+    assert response == [{
+        "cross_rate": 17.3866,
+        "result": 2086.3920000000003,
+        "to_currency": "USD"
+    }]
+
+
+def test_get_exchanged_result_with_multi_to_currency(app, client):
+    body = {'amount': 120, 'toCurrency': ["DKK", "USD"], 'fromCurrency': "TRY", "date": "2022-06-23"}
+    response = client.get('/exchange', json=body).get_json()
+    assert response == [{
+        "cross_rate": 2.458,
+        "result": 294.96000000000004,
+        "to_currency": "DKK"
+    }, {
+        "cross_rate": 17.3866,
+        "result": 2086.3920000000003,
+        "to_currency": "USD"
+    }]
