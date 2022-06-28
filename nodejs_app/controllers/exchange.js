@@ -3,7 +3,7 @@ const httpServer = require('../controllers/httpServer')
 const exchangeStorage = require("../history/exchange-storage")
 const exchange = async (req, res, next) => {
     
-    if (!req.body.amount || !req.body.toCurrency || !req.body.fromCurrency ){
+    if (!req.body.amount || !req.body.toCurrency || !req.body.fromCurrency || !req.body.date ){
         res.statusCode = 404;
         res.setHeader('Content-Type', 'application/json');
         return res.json({"error":"Request As Not Expected!"});
@@ -21,7 +21,9 @@ const exchange = async (req, res, next) => {
         };
     
     httpServer.sendHttpRequest(res, options, data, function(body,data){
-        exchangeStorage.add_exchange_history(JSON.parse(data), body);
+        if ((!!body) && (body.constructor === Array)){
+            exchangeStorage.add_exchange_history(JSON.parse(data), body);
+        }
         return res.json(body);
     });
    /* const statusCode = statusCodeMessage[0];

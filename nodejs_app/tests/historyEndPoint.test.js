@@ -1,11 +1,11 @@
 const request = require('supertest')
 const app = require('../app')
 describe('History EndPoint Check', () => {
-    it('history/formula end point check', async() => {
+    it('check history/formula end point', async() => {
         const formula_history = await (await request(app).get("/history/formula")).body.formula_history
         expect(formula_history).toEqual([])
     })
-    it('history/formula end point check after send a request to the calculate end point', async() => {
+    it('check history/formula end point after send a request to the calculate end point', async() => {
         const body = {
             expression: "2+3+4"
           }
@@ -16,12 +16,12 @@ describe('History EndPoint Check', () => {
             result:res_calculate.body.result
         })
     })
-    it('history/exchange end point check', async() => {
+    it('check history/exchange end point', async() => {
         const exchange_history = await (await request(app).get("/history/exchange")).body.exchange_history;
         
         expect(exchange_history).toEqual([])
     })
-    it('history/exchange end point check after send a request to the exchange end point', async() => {
+    it('checkhistory/exchange end point after send a request to the exchange end point', async() => {
         const body = {
             amount : 120, 
             toCurrency : "USD", 
@@ -30,9 +30,40 @@ describe('History EndPoint Check', () => {
         }
         const res_exchange = await request(app).get("/exchange").send(body)
         const exchange_history = await (await request(app).get("/history/exchange")).body.exchange_history;
-        expect(exchange_history[0]).toEqual({
-            exchange_request:body,
-            result:res_exchange.body
+        expect(exchange_history[0]).toEqual( {
+            date: body.date,
+            records: [
+                {
+                    to_currency: body.toCurrency,
+                    cross_rate: res_exchange.body[0]["cross_rate"],
+                    from_currency: body.fromCurrency
+                }
+            ]
+        });
+    })
+    it('checkhistory/exchange end point after send a request to the exchange end point with multi to_currency', async() => {
+        const body = {
+            amount : 120, 
+            toCurrency : ["USD", "DKK"], 
+            fromCurrency: "TRY", 
+            date:"2022-06-24"
+        }
+        const res_exchange = await request(app).get("/exchange").send(body)
+        const exchange_history = await (await request(app).get("/history/exchange")).body.exchange_history;
+        expect(exchange_history[1]).toEqual( {
+            date: body.date,
+            records: [
+                {
+                    to_currency: body.toCurrency[0],
+                    cross_rate: res_exchange.body[0]["cross_rate"],
+                    from_currency: body.fromCurrency
+                },
+                {
+                    to_currency: body.toCurrency[1],
+                    cross_rate: res_exchange.body[1]["cross_rate"],
+                    from_currency: body.fromCurrency
+                }
+            ]
         });
     })
     
