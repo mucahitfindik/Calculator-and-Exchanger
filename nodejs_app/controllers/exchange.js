@@ -1,3 +1,4 @@
+
 const pythonServerConfig = require('../controllers/pythonServerConfig')
 const httpServer = require('../controllers/httpServer')
 const exchangeStorage = require("../history/exchange-storage")
@@ -8,7 +9,7 @@ const exchange = async (req, res, next) => {
         res.setHeader('Content-Type', 'application/json');
         return res.json({"error":"Request As Not Expected!"});
     }
-    historyController.search_history_exchange_by_date(req.body, function(cross_rates_from_history){
+    historyController.search_exchange_history_by_date(req.body, function(cross_rates_from_history){
         if(cross_rates_from_history.length == 0){
             return make_exchange_request(req, res, []);
         }
