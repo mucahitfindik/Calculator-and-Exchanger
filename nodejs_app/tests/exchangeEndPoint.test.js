@@ -36,14 +36,14 @@ describe('Exchange EndPoint Check', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body).toEqual([
             {
-                cross_rate: 17.3866,
-                result: 2086.3920000000003,
-                to_currency: "TRY"
-            },
-            {
                 cross_rate: 7.0734,
                 result: 848.808,
                 to_currency: "DKK"
+            },
+            {
+                cross_rate: 17.3866,
+                result: 2086.3920000000003,
+                to_currency: "TRY"
             }
         ])
     })
