@@ -11,8 +11,24 @@ const history_formula = async (req, res, next) => {
 const history_exchange = async (req, res, next) => {
     return res.json({"exchange_history":exchange_history});   
 };
+const search_formula_history = (data, cb)=>{
+    expression = data.expression;
+    if(formula_history.length == 0){
+        cb(null);
+        return;
+    }
+    let expression_result = null;
+    formula_history.every(item =>{
+        if(expression == item.expression){
+            expression_result = item.result;
+            return false;
+        }
+        return true;
+    })
+    cb(expression_result);
+}
 
-const search_history_exchange_by_date = (data, cb)=>{
+const search_exchange_history_by_date = (data, cb)=>{
     date = data.date
     if(exchange_history.length == 0){
         cb([]);
@@ -60,5 +76,6 @@ const get_cross_rate_history_exchange = (records, to_currency, from_currency, cb
 module.exports = {
     history_formula,
     history_exchange,
-    search_history_exchange_by_date
+    search_exchange_history_by_date,
+    search_formula_history
 };
