@@ -9,7 +9,7 @@ describe('History EndPoint Check', () => {
         const body = {
             expression: "2+3+4"
           }
-        const res_calculate = await request(app).post("/calculate").send(body)
+        const res_calculate = await request(app).get("/calculate").send(body)
         const formula_history = await (await request(app).get("/history/formula")).body.formula_history
         expect(formula_history[0]).toEqual({
             expression:body.expression,
@@ -28,7 +28,7 @@ describe('History EndPoint Check', () => {
             fromCurrency: "TRY", 
             date:"2022-06-23"
         }
-        const res_exchange = await request(app).post("/exchange").send(body)
+        const res_exchange = await request(app).get("/exchange").send(body)
         const exchange_history = await (await request(app).get("/history/exchange")).body.exchange_history;
         expect(exchange_history[0]).toEqual( {
             date: body.date,
@@ -48,7 +48,7 @@ describe('History EndPoint Check', () => {
             fromCurrency: "TRY", 
             date:"2022-06-24"
         }
-        const res_exchange = await request(app).post("/exchange").send(body)
+        const res_exchange = await request(app).get("/exchange").send(body)
         const exchange_history = await (await request(app).get("/history/exchange")).body.exchange_history;
         expect(exchange_history[1]).toEqual( {
             date: body.date,
