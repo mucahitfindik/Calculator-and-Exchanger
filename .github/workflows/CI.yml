@@ -46,7 +46,9 @@ jobs:
         coverage run --source=app -m pytest -v tests && coverage report -m
       working-directory: ./python_app
     - name: Run exchange_backend
-      run: flask run -h 0.0.0.0 -p 5002
+      run: |
+        export FLASK_APP=main.py 
+        flask run -h 0.0.0.0 -p 5002
       working-directory: ./python_app
     - name: Set up PhP 8
       uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
