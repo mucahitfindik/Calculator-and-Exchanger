@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/calculate', "CalculationController@calculate");
+Route::post('/calculate', "CalculationController@calculate");

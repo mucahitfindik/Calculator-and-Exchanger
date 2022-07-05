@@ -10,7 +10,7 @@ def get_currency_list():
     return {'currency_list': Riksbank.get_currency_list()}
 
 
-@blueprint.route('/exchange', methods=('GET',))
+@blueprint.route('/exchange', methods=('POST',))
 def get_exchanged_result():
 
     data = request.get_json()
