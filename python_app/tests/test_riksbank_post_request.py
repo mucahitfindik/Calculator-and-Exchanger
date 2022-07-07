@@ -1,8 +1,9 @@
-import requests
+from app.riksbank.post_request import all_cross_names, get_cross_rate
+import datetime as dt
 
 
-def test_get_currency_list(app, client):
-    response = client.get('/currency-list')
+def test_all_cross_names():
+    cross_names = all_cross_names()
     actual_cross_names = {
         "ATS": "Austrian shilling",
         "AUD": "Australian dollar",
@@ -53,29 +54,20 @@ def test_get_currency_list(app, client):
         "TRY": "Turkish new lira",
         "USD": "US dollar",
         "ZAR": "South African rand"}
-    assert response.get_json()["currency_list"] == actual_cross_names
-    assert response.status_code == 200
+    assert cross_names == actual_cross_names
 
 
-def test_get_exchanged_result(app, client):
-    body = {'amount': 120, 'toCurrency': "USD", 'fromCurrency': "TRY", "date": "2022-06-23"}
-    response = client.post('/exchange', json=body).get_json()
-    assert response == [{
-        "cross_rate": 0.0575,
-        "result": 6.9,
-        "to_currency": "USD"
-    }]
+def test_get_cross_rate_for_holidays():
+    to_currency = "TRY"
+    from_currency = "USD"
+    date = dt.datetime(year=2022, month=6, day=24).date()
+    cross_rate = get_cross_rate(to_currency, from_currency, date)
+    assert cross_rate == 17.3866
 
 
-def test_get_exchanged_result_with_multi_to_currency(app, client):
-    body = {'amount': 120, 'toCurrency': ["DKK", "USD"], 'fromCurrency': "TRY", "date": "2022-06-23"}
-    response = client.post('/exchange', json=body).get_json()
-    assert response == [{
-        "cross_rate": 0.4068,
-        "result": 48.816,
-        "to_currency": "DKK"
-    }, {
-        "cross_rate": 0.0575,
-        "result": 6.9,
-        "to_currency": "USD"
-    }]
+def test_get_cross_rate_for_weekdays():
+    to_currency = "TRY"
+    from_currency = "USD"
+    date = dt.datetime(year=2022, month=6, day=23).date()
+    cross_rate = get_cross_rate(to_currency, from_currency, date)
+    assert cross_rate == 17.3866
