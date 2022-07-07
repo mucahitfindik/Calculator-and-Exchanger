@@ -24,6 +24,7 @@ python_app/*.egg-info/
 python_app/.tox/
 python_app/.cache/
 python_app/.pytest_cache/
+python_app/__pycache__/
 python_app/.idea/
 python_app/docs/_build/
 

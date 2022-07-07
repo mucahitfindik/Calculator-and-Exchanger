@@ -1,4 +1,4 @@
-from app.riksbank.postRequest import all_cross_names, get_cross_rate
+from app.riksbank.post_request import all_cross_names, get_cross_rate
 import datetime as dt
 
 
