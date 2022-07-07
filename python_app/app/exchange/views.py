@@ -21,6 +21,7 @@ def get_currency_list():
 def get_exchanged_result():
 
     data = request.get_json()
+    print(type(data))
 
     try:
         check_required_parameters(data)

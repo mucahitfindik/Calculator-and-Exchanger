@@ -1,4 +1,3 @@
-import requests
 
 
 def test_get_currency_list(app, client):
@@ -57,7 +56,24 @@ def test_get_currency_list(app, client):
     assert response.status_code == 200
 
 
-def test_get_exchanged_result(app, client):
+def test_post_exchanged_result_without_body(app, client):
+    response = client.post('/exchange').get_json()
+    assert response == {"error": 'The body of this request is unexpected.'}
+
+
+def test_post_exchanged_result_with_empty_body(app, client):
+    body = {}
+    response = client.post('/exchange', json=body).get_json()
+    assert response == {"error": "No amount provided!"}
+
+
+def test_post_exchanged_result_with_unsupported_currency(app, client):
+    body = {'amount': 120, 'toCurrency': "USZ", 'fromCurrency': "TRY", "date": "2022-06-23"}
+    response = client.post('/exchange', json=body).get_json()
+    assert response == {"error": "Currency list doesn't include USZ."}
+
+
+def test_post_exchanged_result(app, client):
     body = {'amount': 120, 'toCurrency': "USD", 'fromCurrency': "TRY", "date": "2022-06-23"}
     response = client.post('/exchange', json=body).get_json()
     assert response == [{
@@ -67,7 +83,7 @@ def test_get_exchanged_result(app, client):
     }]
 
 
-def test_get_exchanged_result_with_multi_to_currency(app, client):
+def test_post_exchanged_result_with_multi_to_currency(app, client):
     body = {'amount': 120, 'toCurrency': ["DKK", "USD"], 'fromCurrency': "TRY", "date": "2022-06-23"}
     response = client.post('/exchange', json=body).get_json()
     assert response == [{
