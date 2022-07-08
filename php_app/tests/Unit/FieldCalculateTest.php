@@ -15,6 +15,7 @@ class FieldCalculateTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->calc = new Field_calculate();
     }
     public function test_field_calculate_simple()
