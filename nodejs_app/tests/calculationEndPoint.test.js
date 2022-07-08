@@ -20,8 +20,8 @@ describe('Calculation EndPoint Check', () => {
     })
     it('should create a request without a body', async() => {
         const res = await request(app).post("/calculate")
-        expect(res.statusCode).toEqual(404)
-        expect(res.body.error).toEqual("Expression Not Found!")
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Please enter expression")
     })
     
   })

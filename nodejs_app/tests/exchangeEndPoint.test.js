@@ -49,8 +49,8 @@ describe('Exchange EndPoint Check', () => {
     })
     it('should create a request without a body', async() => {
         const res = await request(app).post("/exchange")
-        expect(res.statusCode).toEqual(404)
-        expect(res.body.error).toEqual("Request As Not Expected!")
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("No amount provided!")
     })
     
   })
