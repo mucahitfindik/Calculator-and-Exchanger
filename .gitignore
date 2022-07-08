@@ -3,6 +3,7 @@
 **/.gitignore.swo
 **/.pytest_cache/
 **/.idea/
+php_app/coverage/
 nodejs_app/node_modules/
 nodejs_app/.env
 **.coverage
