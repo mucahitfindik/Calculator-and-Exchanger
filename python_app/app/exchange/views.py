@@ -33,9 +33,6 @@ def get_exchanged_result():
     date = dt.date.fromisoformat(data["date"])
     currency_list = Riksbank.get_currency_list()
 
-    if not isinstance(to_currency, list):
-        to_currency = [to_currency]
-
     try:
         check_currency_supported(from_currency, to_currency, currency_list)
     except InvalidCurrency as err:

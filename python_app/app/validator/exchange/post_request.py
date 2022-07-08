@@ -19,10 +19,10 @@ def check_required_parameters(data):
         raise InvalidRequestParameter("No amount provided!")
     elif not isinstance(data["amount"], int):
         raise InvalidRequestParameter("Amount should be number!")
-    elif "toCurrency" not in data or data["toCurrency"] == "" or data["toCurrency"] == []:
+    elif "toCurrency" not in data or data["toCurrency"] == []:
         raise InvalidRequestParameter("Please select the currency(s) in which you want to exchange the amount.")
-    elif not (isinstance(data["toCurrency"], list) or isinstance(data["toCurrency"], str)):
-        raise InvalidRequestParameter("toCurrency should be array or string!")
+    elif not isinstance(data["toCurrency"], list):
+        raise InvalidRequestParameter("toCurrency should be array!")
     elif "fromCurrency" not in data or data["fromCurrency"] == "":
         raise InvalidRequestParameter("Please select a currency of the amount.")
     elif not isinstance(data["fromCurrency"], str):
