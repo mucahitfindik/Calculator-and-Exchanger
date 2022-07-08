@@ -64,7 +64,7 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       working-directory: ./php_app
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-progress --prefer-dist
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       working-directory: ./php_app
     - name: Generate key
       run: php artisan key:generate
@@ -81,7 +81,7 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit --coverage --min=100
+      run: vendor/bin/phpunit
       working-directory: ./php_app
     - name: Use Node.js
       uses: actions/setup-node@v2
