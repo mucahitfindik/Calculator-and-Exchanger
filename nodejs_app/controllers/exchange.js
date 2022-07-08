@@ -4,11 +4,6 @@ const httpServer = require('../controllers/httpServer')
 const exchangeStorage = require("../history/exchange-storage")
 const historyController  = require('../controllers/history');
 const exchange = async (req, res, next) => {
-    if (!req.body.amount || !req.body.toCurrency || !req.body.fromCurrency || !req.body.date ){
-        res.statusCode = 404;
-        res.setHeader('Content-Type', 'application/json');
-        return res.json({"error":"Request As Not Expected!"});
-    }
     historyController.search_exchange_history_by_date(req.body, function(cross_rates_from_history){
         if(cross_rates_from_history.length == 0){
             return make_exchange_request(req, res, []);
@@ -37,27 +32,24 @@ const exchange = async (req, res, next) => {
     
 };
 const make_exchange_request = (req, res ,cross_rates_from_history) =>{
-    const data = JSON.stringify({
-        amount : req.body.amount,
-        toCurrency : req.body.toCurrency,
-        fromCurrency : req.body.fromCurrency,
-        date : req.body.date,
-    });
+    const data = JSON.stringify(req.body);
     const options = pythonServerConfig.pythonServerConfig(path = req.path, method = req.method);
     options.headers = {
         'Content-Type': 'application/json',
         'Content-Length': data.length
         };
-    httpServer.sendHttpRequest(res, options, data, function(body,data){
-        if ((!!body) && (body.constructor === Array)){
-            exchangeStorage.add_exchange_history(JSON.parse(data), body);
-            if(cross_rates_from_history.length != 0){
-                Array.prototype.push.apply(body,cross_rates_from_history);
-            }
+    httpServer.sendHttpRequest(res, options, data, function(body){
+        if(body.error){
+            return res.status(400).json(body);
         }
-        res.status = 200;
+        
+        exchangeStorage.add_exchange_history(req.body, body);
+        if(cross_rates_from_history.length != 0){
+            Array.prototype.push.apply(body,cross_rates_from_history);
+        }
+
         res.setHeader('Content-Type', 'application/json');
-        return res.json(body);
+        return res.status(200).json(body);
     });
 };
 module.exports = {

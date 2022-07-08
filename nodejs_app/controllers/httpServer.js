@@ -9,7 +9,7 @@ const sendHttpRequest = (res, options, data, cb) =>{
         }).on('end', () => {
         body = Buffer.concat(body).toString();
         body = JSON.parse(body);
-        cb(body,data);
+        cb(body);
         });
     });
     req.write(data);
