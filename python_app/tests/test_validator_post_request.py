@@ -72,19 +72,19 @@ class TestValidatorPostRequest(unittest.TestCase):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 25, 'fromCurrency': 'USD', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select a currency of the amount." in message.exception.message)
+        self.assertTrue("Please select the currency(s) in which you want to exchange the amount." in message.exception.message)
 
     def test_to_currency_empty_string(self):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 25, 'toCurrency': '', 'fromCurrency': 'USD', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select a currency of the amount." in message.exception.message)
+        self.assertTrue("Please select the currency(s) in which you want to exchange the amount." in message.exception.message)
 
     def test_to_currency_empty_array(self):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 25, 'toCurrency': [], 'fromCurrency': 'USD', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select a currency of the amount." in message.exception.message)
+        self.assertTrue("Please select the currency(s) in which you want to exchange the amount." in message.exception.message)
 
     def test_to_currency_number(self):
         with self.assertRaises(InvalidRequestParameter) as message:
@@ -96,13 +96,13 @@ class TestValidatorPostRequest(unittest.TestCase):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 2, 'toCurrency': ['SEK', 'DKK'], 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select a currency in which you want to exchange the amount." in message.exception.message)
+        self.assertTrue("Please select a currency of the amount." in message.exception.message)
 
     def test_from_currency_empty_string(self):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 2, 'toCurrency': ['SEK', 'DKK'], 'fromCurrency': '', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select a currency in which you want to exchange the amount." in message.exception.message)
+        self.assertTrue("Please select a currency of the amount." in message.exception.message)
 
     def test_from_currency_array(self):
         with self.assertRaises(InvalidRequestParameter) as message:
