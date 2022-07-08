@@ -13,6 +13,8 @@ class InvalidCurrency(InvalidRequestParameter):
 
 
 def check_required_parameters(data):
+    if data is None:
+        raise InvalidRequestParameter("The body of this request is unexpected.")
     if "amount" not in data:
         raise InvalidRequestParameter("No amount provided!")
     elif not isinstance(data["amount"], int):

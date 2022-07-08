@@ -7,11 +7,6 @@ import datetime as dt
 blueprint = Blueprint('exchange', __name__)
 
 
-@blueprint.errorhandler(400)
-def invalid_request(e):
-    return jsonify({"error": 'The body of this request is unexpected.'}), 400
-
-
 @blueprint.route('/currency-list', methods=('GET',))
 def get_currency_list():
     return jsonify({'currency_list': Riksbank.get_currency_list()}), 200
@@ -21,7 +16,6 @@ def get_currency_list():
 def get_exchanged_result():
 
     data = request.get_json()
-    print(type(data))
 
     try:
         check_required_parameters(data)
