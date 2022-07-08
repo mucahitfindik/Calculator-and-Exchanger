@@ -4,7 +4,7 @@ describe('Exchange EndPoint Check', () => {
     it('php_app calculate end point check', async() => {
         const body = {
             "amount" : 120, 
-            "toCurrency" : "TRY", 
+            "toCurrency" : ["TRY"], 
             "fromCurrency": "USD",
             "date": "2022-06-23"
         }
@@ -15,7 +15,7 @@ describe('Exchange EndPoint Check', () => {
     it('should create a request with a body', async() => {
         const body = {
             "amount" : 120, 
-            "toCurrency" : "TRY", 
+            "toCurrency" : ["TRY"], 
             "fromCurrency": "USD",
             "date": "2022-06-23"
         }
