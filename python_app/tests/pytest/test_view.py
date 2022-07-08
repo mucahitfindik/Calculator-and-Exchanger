@@ -68,13 +68,13 @@ def test_post_exchanged_result_with_empty_body(app, client):
 
 
 def test_post_exchanged_result_with_unsupported_currency(app, client):
-    body = {'amount': 120, 'toCurrency': "USZ", 'fromCurrency': "TRY", "date": "2022-06-23"}
+    body = {'amount': 120, 'toCurrency': ["USZ"], 'fromCurrency': "TRY", "date": "2022-06-23"}
     response = client.post('/exchange', json=body).get_json()
     assert response == {"error": "Currency list doesn't include USZ."}
 
 
 def test_post_exchanged_result(app, client):
-    body = {'amount': 120, 'toCurrency': "USD", 'fromCurrency': "TRY", "date": "2022-06-23"}
+    body = {'amount': 120, 'toCurrency': ["USD"], 'fromCurrency': "TRY", "date": "2022-06-23"}
     response = client.post('/exchange', json=body).get_json()
     assert response == [{
         "cross_rate": 0.0575,

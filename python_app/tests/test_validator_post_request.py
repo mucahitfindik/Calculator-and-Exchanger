@@ -78,7 +78,7 @@ class TestValidatorPostRequest(unittest.TestCase):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 25, 'toCurrency': '', 'fromCurrency': 'USD', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("Please select the currency(s) in which you want to exchange the amount." in message.exception.message)
+        self.assertTrue("toCurrency should be array!" in message.exception.message)
 
     def test_to_currency_empty_array(self):
         with self.assertRaises(InvalidRequestParameter) as message:
@@ -90,7 +90,7 @@ class TestValidatorPostRequest(unittest.TestCase):
         with self.assertRaises(InvalidRequestParameter) as message:
             data = {'amount': 25, 'toCurrency': 2, 'fromCurrency': 'USD', 'date': '2022-06-27'}
             check_required_parameters(data)
-        self.assertTrue("toCurrency should be array or string!" in message.exception.message)
+        self.assertTrue("toCurrency should be array!" in message.exception.message)
 
     def test_from_currency_not_exist(self):
         with self.assertRaises(InvalidRequestParameter) as message:
