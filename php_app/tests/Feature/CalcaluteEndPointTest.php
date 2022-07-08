@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CalcaluteEndPointTest extends TestCase
@@ -23,19 +21,19 @@ class CalcaluteEndPointTest extends TestCase
     {
         $response = $this->json('POST', "/calculate");
 
-        $this->assertEquals(json_decode($response->getContent())->message, "Expression Not Found!");
+        $this->assertEquals(json_decode($response->getContent())->error, "Please enter expression");
     }
     public function test_invalid_expression()
     {
         $response = $this->json('POST', "/calculate", ['expression' => "(2/4*(6-3)das)"]);
 
-        $this->assertEquals(json_decode($response->getContent())->message, "Expression includes unavailable character(s)!");
+        $this->assertEquals(json_decode($response->getContent())->error, "Expression includes unavailable character(s)!");
     }
     public function test_parenthesis_error()
     {
         $response = $this->json('POST', "/calculate", ['expression' => "(2/4*(6-3)"]);
 
-        $this->assertEquals(json_decode($response->getContent())->message, "Parenthesis error!");
+        $this->assertEquals(json_decode($response->getContent())->error, "Parenthesis error!");
     }
     public function test_checkResult(){
         $response = $this->json('POST', "/calculate",['expression' => "2+4+5"]);
