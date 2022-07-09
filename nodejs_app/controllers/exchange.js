@@ -4,6 +4,9 @@ const httpServer = require('../controllers/httpServer')
 const exchangeStorage = require("../history/exchange-storage")
 const historyController  = require('../controllers/history');
 const exchange = async (req, res, next) => {
+    if (!req.body.amount || !req.body.toCurrency || !req.body.fromCurrency || !req.body.date || req.body.toCurrency.constructor !== Array || req.body.amount.constructor !== Number){
+        return make_exchange_request(req, res, []);
+    }
     historyController.search_exchange_history_by_date(req.body, function(cross_rates_from_history){
         if(cross_rates_from_history.length == 0){
             return make_exchange_request(req, res, []);
