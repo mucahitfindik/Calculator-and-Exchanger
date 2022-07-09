@@ -51,9 +51,10 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Running tests
+    - name: Running tests(python)
       run: |
-        pytest python_app/tests/*.py
+        coverage run --source=app -m pytest -v tests && coverage report -m
+      working-directory: ./python_app 
     - name: Set up PhP 8
       uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -88,8 +89,8 @@ jobs:
     - name: Install dependencies
       run: npm install
       working-directory: ./nodejs_app
-    - name: Run test
-      run: npm test
+    - name: Run test(nodejs)
+      run: npx jest --coverage
       working-directory: ./nodejs_app
     - name: Create .env file
       run: |

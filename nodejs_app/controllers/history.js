@@ -60,13 +60,14 @@ const get_cross_rate_history_exchange = (records, to_currency, from_currency, cb
         }
         else if(record.to_currency == from_currency){
             to_currency.forEach(currency=>{
-                if(record.from_currency == currency )
-                reverse_record ={
-                    to_currency : record.from_currency,
-                    cross_rate: 1/record.cross_rate,
-                    from_currency: record.to_currency
-                };
-                cross_rates.push(reverse_record)
+                if(record.from_currency == currency ){
+                    reverse_record ={
+                        to_currency : record.from_currency,
+                        cross_rate: 1/record.cross_rate,
+                        from_currency: record.to_currency
+                    };
+                    cross_rates.push(reverse_record)
+                }
             })
             
         }
