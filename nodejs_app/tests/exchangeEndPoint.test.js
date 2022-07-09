@@ -24,6 +24,39 @@ describe('Exchange EndPoint Check', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body).toEqual([{ cross_rate: 17.3866, result: 2086.3920000000003, to_currency: 'TRY'}])
     })
+    it('should response to the request using history', async() => {
+        const body = {
+            "amount" : 120, 
+            "toCurrency" : ["TRY"], 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res_ = await request(app).post("/exchange").send(body)
+        const res = await request(app).post("/exchange").send(body)
+
+        
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toEqual([{ cross_rate: 17.3866, result: 2086.3920000000003, to_currency: 'TRY'}])
+    })
+    it('should response to the request using history by changing fromCurrency to toCurrency vice versa', async() => {
+        const body_ = {
+            "amount" : 120, 
+            "toCurrency" : ["TRY"], 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res_ = await request(app).post("/exchange").send(body_)
+        const body = {
+            "amount" : 120, 
+            "toCurrency" : ["USD"], 
+            "fromCurrency": "TRY",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toEqual([{ cross_rate: 0.05751555795842775, result: 6.90186695501133, to_currency: 'USD'}])
+    })
     it('should create a request with a body that has to_currency is a list', async() => {
         const body = {
             "amount" : 120, 
@@ -32,7 +65,6 @@ describe('Exchange EndPoint Check', () => {
             "date": "2022-06-23"
         }
         const res = await request(app).post("/exchange").send(body)
-        
         expect(res.statusCode).toEqual(200)
         expect(res.body).toEqual([
             {

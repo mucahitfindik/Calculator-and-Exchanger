@@ -23,5 +23,14 @@ describe('Calculation EndPoint Check', () => {
         expect(res.statusCode).toEqual(400)
         expect(res.body.error).toEqual("Please enter expression")
     })
+    it('should response to the request using history', async() => {
+      const body = {
+          expression: "2+3+4"
+        }
+      const res_ = await request(app).post("/calculate").send(body)
+      const res = await request(app).post("/calculate").send(body)
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.result).toEqual(9)
+  })
     
   })
