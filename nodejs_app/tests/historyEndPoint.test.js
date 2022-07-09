@@ -24,7 +24,7 @@ describe('History EndPoint Check', () => {
     it('checkhistory/exchange end point after send a request to the exchange end point', async() => {
         const body = {
             amount : 120, 
-            toCurrency : "USD", 
+            toCurrency : ["USD"], 
             fromCurrency: "TRY", 
             date:"2022-06-23"
         }
@@ -34,7 +34,7 @@ describe('History EndPoint Check', () => {
             date: body.date,
             records: [
                 {
-                    to_currency: body.toCurrency,
+                    to_currency: body.toCurrency[0],
                     cross_rate: res_exchange.body[0]["cross_rate"],
                     from_currency: body.fromCurrency
                 }

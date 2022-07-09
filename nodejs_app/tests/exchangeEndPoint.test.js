@@ -4,7 +4,7 @@ describe('Exchange EndPoint Check', () => {
     it('php_app calculate end point check', async() => {
         const body = {
             "amount" : 120, 
-            "toCurrency" : "TRY", 
+            "toCurrency" : ["TRY"], 
             "fromCurrency": "USD",
             "date": "2022-06-23"
         }
@@ -15,7 +15,7 @@ describe('Exchange EndPoint Check', () => {
     it('should create a request with a body', async() => {
         const body = {
             "amount" : 120, 
-            "toCurrency" : "TRY", 
+            "toCurrency" : ["TRY"], 
             "fromCurrency": "USD",
             "date": "2022-06-23"
         }
@@ -51,6 +51,111 @@ describe('Exchange EndPoint Check', () => {
         const res = await request(app).post("/exchange")
         expect(res.statusCode).toEqual(400)
         expect(res.body.error).toEqual("No amount provided!")
+    })
+    it('should create a request with a body that does not include amout attribute', async() => {
+        const body = {
+            "toCurrency" : ["TRY", "DKK"], 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("No amount provided!")
+    })
+    it('should create a request with a body that amount is not number', async() => {
+        const body = {
+            "amount": "",
+            "toCurrency" : ["TRY", "DKK"], 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Amount should be number!")
+    })
+    it('should create a request with a body that does not include toCurrency attribute', async() => {
+        const body = {
+            "amount": 120,
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Please select the currency(s) in which you want to exchange the amount.")
+    })
+    it('should create a request with a body that toCurrency is empty array', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : [], 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Please select the currency(s) in which you want to exchange the amount.")
+    })
+    it('should create a request with a body that toCurrency is not an array ', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : 'TRY', 
+            "fromCurrency": "USD",
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("toCurrency should be array!")
+    })
+    it('should create a request with a body that does not include fromCurrency attribute', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : ["SEK"], 
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Please select a currency of the amount.")
+    })
+    it('should create a request with a body that fromCurrency is empty', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : ["SEK"],
+            "fromCurrency": "", 
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("Please select a currency of the amount.")
+    })
+    it('should create a request with a body that fromCurrency is not a string', async() => {
+        const body = { 
+            "amount": 120,
+            "toCurrency" : ["TRY"], 
+            "fromCurrency": [],
+            "date": "2022-06-23"
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.body.error).toEqual("fromCurrency should be string!")
+    })
+    it('should create a request with a body that does not include date attribute ', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : ["TRY"], 
+            "fromCurrency": "USD",
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("No date provided!")
+    })
+    it('should create a request with a body that date is empty ', async() => {
+        const body = {
+            "amount": 120,
+            "toCurrency" : ["TRY"], 
+            "fromCurrency": "USD",
+            "date": ""
+        }
+        const res = await request(app).post("/exchange").send(body)
+        expect(res.statusCode).toEqual(400)
+        expect(res.body.error).toEqual("No date provided!")
     })
     
   })
