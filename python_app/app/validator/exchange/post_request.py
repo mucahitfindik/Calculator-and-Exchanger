@@ -17,7 +17,7 @@ def check_required_parameters(data):
         raise InvalidRequestParameter("The body of this request is unexpected.")
     if "amount" not in data:
         raise InvalidRequestParameter("No amount provided!")
-    elif not isinstance(data["amount"], int):
+    elif not (isinstance(data["amount"], int) or isinstance(data["amount"], float)):
         raise InvalidRequestParameter("Amount should be number!")
     elif "toCurrency" not in data or data["toCurrency"] == []:
         raise InvalidRequestParameter("Please select the currency(s) in which you want to exchange the amount.")
